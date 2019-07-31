@@ -18,6 +18,6 @@ class Info {
 
     var topSkills: List<TopSkill> = ArrayList()
 
-    var buildWith: List<BuiltWithItem> = ArrayList()
+    var builtWith: List<BuiltWithItem> = ArrayList()
 
 }
