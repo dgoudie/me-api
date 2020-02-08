@@ -4,6 +4,8 @@ class Link {
 
     var text: String = ""
 
+    var textForPrint: String = ""
+
     var link: String = ""
 
     var icon: String = ""
