@@ -1,15 +1,18 @@
 import { Collection, MongoClient } from 'mongodb';
 
+import { getLogger } from 'log4js';
 import { properties } from 'resources/properties';
 
+let mongoClient: MongoClient;
 let collection: Collection;
 
 export async function init() {
-  let mongoClient = new MongoClient(process.env.MONGODB_CONNECTION_URL, {
+  mongoClient = new MongoClient(process.env.MONGODB_CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000,
   });
-  mongoClient = await mongoClient.connect();
+  mongoClient.connect();
   collection = mongoClient
     .db(properties.mongodbDbName)
     .collection(properties.mongodbCollectionName);
