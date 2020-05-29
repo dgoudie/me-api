@@ -1,0 +1,30 @@
+{
+  "name": "me-api",
+  "version": "1.0.0",
+  "description": "API for goudie.dev resume",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/dgoudie/me-api"
+  },
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "tsc-watch --onSuccess \"cross-env NODE_PATH=./dist node -r dotenv/config dist/app --env=dev\"",
+    "prod": "tsc && cross-env NODE_PATH=./dist node dist/app --env=prod"
+  },
+  "dependencies": {
+    "@types/node": "^12.12.25",
+    "@types/webrtc": "0.0.26",
+    "cross-env": "^5.2.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.0.0",
+    "log4js": "^4.5.1",
+    "mongodb": "^3.5.8",
+    "typescript": "^3.7.5"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^3.5.18",
+    "tsc-watch": "^2.4.0"
+  }
+}
