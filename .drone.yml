@@ -88,6 +88,13 @@ volumes:
 
 ---
 kind: secret
+name: DOMAIN
+get:
+  path: secret/drone-ci
+  name: DOMAIN
+
+---
+kind: secret
 name: EMAIL
 get:
   path: secret/drone-ci
