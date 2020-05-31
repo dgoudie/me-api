@@ -38,6 +38,11 @@ steps:
         --detach
         --restart=always
         --name $${HOST_NAME}
+        --network="nginx_default"
+        -e "VIRTUAL_HOST=$${HOST_NAME}.$${DOMAIN}"
+        -e "VIRTUAL_PORT=8080"
+        -e "LETSENCRYPT_HOST=$${HOST_NAME}.$${DOMAIN}"
+        -e "LETSENCRYPT_EMAIL=$${EMAIL}"
         -e MONGODB_CONNECTION_URL=$${MONGODB_CONNECTION_URL}
         --label=com.centurylinklabs.watchtower.enable=false
         $${DOCKER_REPO_NAME}
@@ -46,6 +51,10 @@ steps:
         from_secret: DOCKER_REPO_NAME
       HOST_NAME:
         from_secret: HOST_NAME
+      EMAIL:
+        from_secret: EMAIL
+      DOMAIN:
+        from_secret: DOMAIN
       MONGODB_CONNECTION_URL:
         from_secret: MONGODB_CONNECTION_URL
     volumes:
