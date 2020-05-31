@@ -1,3 +1,4 @@
+import { DateScalar } from 'utils/graphql-date-scalar';
 import { buildSchema } from 'graphql';
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
@@ -8,8 +9,8 @@ export function init(app: express.Application) {
   app.use(
     '/graphql',
     graphqlHTTP({
-      schema: buildSchema(properties.grapqlSchema),
-      rootValue: { info: handleQuery },
+      schema: buildSchema(properties.graphQlTypeDefs),
+      rootValue: { info: handleQuery, Date: DateScalar },
       graphiql: true,
     })
   );

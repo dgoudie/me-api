@@ -38,9 +38,7 @@ steps:
         --detach
         --restart=always
         --name $${HOST_NAME}
-        -e VAULT_API_KEY=$${VAULT_API_KEY}
-        -e VAULT_UNSEAL_KEY_1=$${VAULT_UNSEAL_KEY_1}
-        -e VAULT_UNSEAL_KEY_2=$${VAULT_UNSEAL_KEY_2}
+        -e MONGODB_CONNECTION_URL=$${MONGODB_CONNECTION_URL}
         --label=com.centurylinklabs.watchtower.enable=false
         $${DOCKER_REPO_NAME}
     environment:
@@ -48,12 +46,8 @@ steps:
         from_secret: DOCKER_REPO_NAME
       HOST_NAME:
         from_secret: HOST_NAME
-      VAULT_API_KEY:
-        from_secret: VAULT_API_KEY
-      VAULT_UNSEAL_KEY_1:
-        from_secret: VAULT_UNSEAL_KEY_1
-      VAULT_UNSEAL_KEY_2:
-        from_secret: VAULT_UNSEAL_KEY_2
+      MONGODB_CONNECTION_URL:
+        from_secret: MONGODB_CONNECTION_URL
     volumes:
       - name: socket
         path: /var/run/docker.sock
@@ -76,6 +70,8 @@ steps:
       PLUGIN_PASSWORD:
         from_secret: MAILGUN_SMTP_PASSWORD
       PLUGIN_RECIPIENTS_ONLY: true
+    when:
+      status: [changed, failure]
 volumes:
   - name: socket
     host:

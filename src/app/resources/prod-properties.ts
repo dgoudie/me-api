@@ -1,1 +1,3 @@
-export const properties = {};
+export const properties = {
+  mongodbDbName: 'ME',
+};

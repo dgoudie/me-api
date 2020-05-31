@@ -1,10 +1,11 @@
 import { Collection, MongoClient } from 'mongodb';
 
+import { Info } from '@stan/me-types';
 import { getLogger } from 'log4js';
 import { properties } from 'resources/properties';
 
 let mongoClient: MongoClient;
-let collection: Collection;
+let collection: Collection<Info>;
 
 export async function init() {
   mongoClient = new MongoClient(process.env.MONGODB_CONNECTION_URL, {
@@ -15,7 +16,7 @@ export async function init() {
   mongoClient.connect();
   collection = mongoClient
     .db(properties.mongodbDbName)
-    .collection(properties.mongodbCollectionName);
+    .collection<Info>(properties.mongodbCollectionName);
 }
 
 export function getInfo() {
