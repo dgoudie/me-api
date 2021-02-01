@@ -30,6 +30,7 @@ export let properties = {
     textForPrint: String!
     link: String!
     faIcon: String!
+    name: String!
   }
   
   type EducationItem {
