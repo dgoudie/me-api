@@ -6,6 +6,9 @@ import { properties } from '../resources/properties';
 
 export function init() {
   getLogger().info(`initializing controller...`);
+  if (!process.env.USER_INTERFACE_PATH) {
+    getLogger().error(`environment variable USER_INTERFACE_PATH not found.`);
+  }
   const app = express();
   setupPreRequestMiddleware(app);
   setupHealthCheck(app);
@@ -15,7 +18,7 @@ export function init() {
   );
 }
 function setupPreRequestMiddleware(app: express.Application) {
-  app.use(cors());
+  app.use(cors({ origin: process.env.USER_INTERFACE_PATH }));
   app.use((req, res, next) => {
     if (!req.url.match(/^\/docs\/?/)) {
       getLogger().info(`Received request to ${req.url}`);
