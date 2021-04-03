@@ -1,8 +1,8 @@
 import cors from 'cors';
 import express from 'express';
 import { getLogger } from 'log4js';
-import { init as initController } from 'controller/controller';
-import { properties } from 'resources/properties';
+import { init as initController } from '../controller/controller';
+import { properties } from '../resources/properties';
 
 export function init() {
   getLogger().info(`initializing controller...`);

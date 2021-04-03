@@ -8,9 +8,11 @@ export let properties = {
   mongodbCollectionName: 'INFO',
   graphQlTypeDefs: ` 
   scalar Date
+  scalar WebsiteStackElements
   
   type Query {
     info: Info
+    websiteStackItemInfo(id: String!): WebsiteStackItemInfo
   }
   
   type Info {
@@ -22,7 +24,7 @@ export let properties = {
     workExperience: [WorkExperienceItem]!
     interests: [String]!
     topSkills: [TopSkill]!
-    builtWith: [BuiltWithItem]!
+    websiteStackElements: WebsiteStackElements!
   }
   
   type Link {
@@ -52,16 +54,25 @@ export let properties = {
     name: String!
     percentage: Int!
   }
-  
-  type BuiltWithItem {
-    iconUrl: String!
-    name: String!
-    links: [BuiltWithItemLink]
+
+  type WebsiteStackItemInfo {
+    title: String!
+    imageUrl: String!
+    description: String
+    links: [WebsiteStackItemInfoLink]
+    additionalImages: [WebsiteStackItemInfoImage]
   }
-  
-  type BuiltWithItemLink {
+
+  type WebsiteStackItemInfoLink {
     text: String!
+    href: String!
+  }
+
+  type WebsiteStackItemInfoImage {
     url: String!
+    width: Int!
+    height: Int!
+    title: String
   }
   `,
 };

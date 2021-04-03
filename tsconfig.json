@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "es2018",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": "./src/app/",
+    "outDir": "build",
+    "rootDir": "src",
     "resolveJsonModule": true,
     "types": ["webrtc", "node"]
   },
-  "lib": ["es2015"]
+  "lib": ["es2018", "esnext.asynciterable"]
 }
