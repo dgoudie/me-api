@@ -70,8 +70,6 @@ export let properties = {
 
   type WebsiteStackItemInfoImage {
     url: String!
-    width: Int!
-    height: Int!
     title: String
   }
   `,
