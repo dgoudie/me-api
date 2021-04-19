@@ -1,53 +1,62 @@
-import { Elements, HandleProps } from 'react-flow-renderer';
+import { Edge } from 'react-flow-renderer';
 import { GraphQLScalarType, Kind } from 'graphql';
 
-import { WebsiteStackGraphElementData } from '@dgoudie/me-types';
+import {
+  WebsiteStackDialogElementData,
+  WebsiteStackGraphElement,
+} from '@dgoudie/me-types';
+
+class JsonGraphQLScalarType<T> extends GraphQLScalarType {
+  constructor({ name, description }: { name: string; description: string }) {
+    super({
+      name,
+      description,
+      parseValue(value) {
+        return JSON.parse(value);
+      },
+      serialize(value: T) {
+        return JSON.stringify(value);
+      },
+      parseLiteral(ast) {
+        if (ast.kind === Kind.INT) {
+          return parseInt(ast.value, 10);
+        }
+        return null;
+      },
+    });
+  }
+}
 
 export const DateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar',
   parseValue(value) {
-    return new Date(value); // value from the client
+    return new Date(value);
   },
   serialize(value: Date) {
-    return value.toISOString(); // value sent to the client
+    return value.toISOString();
   },
   parseLiteral(ast) {
     if (ast.kind === Kind.INT) {
-      return parseInt(ast.value, 10); // ast value is always in string format
+      return parseInt(ast.value, 10);
     }
     return null;
   },
 });
-export const WebsiteStackElementsScalar = new GraphQLScalarType({
-  name: 'WebsiteStackElements',
-  description: 'WebsiteStackElements custom scalar',
-  parseValue(value) {
-    return JSON.parse(value); // value from the client
-  },
-  serialize(value: Elements<WebsiteStackGraphElementData>) {
-    return JSON.stringify(value); // value sent to the client
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
-      return parseInt(ast.value, 10); // ast value is always in string format
-    }
-    return null;
-  },
-});
-export const HandlePropsScalar = new GraphQLScalarType({
-  name: 'HandleProps',
-  description: 'HandleProps custom scalar',
-  parseValue(value) {
-    return JSON.parse(value); // value from the client
-  },
-  serialize(value: HandleProps) {
-    return JSON.stringify(value); // value sent to the client
-  },
-  parseLiteral(ast) {
-    if (ast.kind === Kind.INT) {
-      return parseInt(ast.value, 10); // ast value is always in string format
-    }
-    return null;
-  },
+
+export const WebsiteStackGraphElementScalar = new JsonGraphQLScalarType<WebsiteStackGraphElement>(
+  {
+    name: 'WebsiteStackGraphElement',
+    description: 'WebsiteStackGraphElement custom scalar',
+  }
+);
+export const WebsiteStackDialogDataElementScalar = new JsonGraphQLScalarType<WebsiteStackDialogElementData>(
+  {
+    name: 'WebsiteStackDialogData',
+    description: 'WebsiteStackDialogData custom scalar',
+  }
+);
+export const EdgeScalar = new JsonGraphQLScalarType<Edge<void>>({
+  name: 'Edge',
+  description: 'Edge custom scalar',
 });

@@ -4,7 +4,6 @@ import { properties as devProperties } from './resources/dev-properties';
 import { getLogger } from 'log4js';
 import { init as initController } from './controller';
 import { init as initRepository } from './repository';
-import { init as initServices } from './services';
 import { properties as prodProperties } from './resources/prod-properties';
 
 const init = () => {
@@ -17,7 +16,6 @@ const init = () => {
   getLogger().info(`starting ${properties.serviceName} (env=${env})`);
 
   initRepository();
-  initServices();
   initController();
 };
 

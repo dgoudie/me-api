@@ -1,30 +1,39 @@
 export let properties = {
   serviceName: process.env.npm_package_name,
-  serviceShortName: process.env.npm_package_name.replace(/-v[0-9]+/, ''),
-  serviceVersion: process.env.npm_package_name.replace(/.+-(v[0-9]+)/, '$1'),
+  serviceShortName: process.env.npm_package_name!.replace(/-v[0-9]+/, ''),
+  serviceVersion: process.env.npm_package_name!.replace(/.+-(v[0-9]+)/, '$1'),
   serviceDescription: process.env.npm_package_description,
   serverPort: 8080,
   mongodbDbName: null,
-  mongodbCollectionName: 'INFO',
+  mongodbInfoCollectionName: 'INFO',
+  mongodbEducationCollectionName: 'EDUCATION',
+  mongodbLinksCollectionName: 'LINKS',
+  mongodbTopSkillsCollectionName: 'TOP_SKILLS',
+  mongodbWorkExperienceCollectionName: 'WORK_EXPERIENCE',
+  mongodbWebsiteStackElementsCollectionName: 'WEBSITE_STACK_NODES',
+  mongodbWebsiteStackEdgesCollectionName: 'WEBSITE_STACK_EDGES',
   graphQlTypeDefs: ` 
   scalar Date
-  scalar WebsiteStackElements
+  scalar WebsiteStackGraphElement
+  scalar WebsiteStackDialogElementData
+  scalar Edge
   
   type Query {
-    info: Info
-    websiteStackItemInfo(id: String!): WebsiteStackItemInfo
+    info: Info!
+    links: [Link]!
+    education: [EducationItem]!
+    workExperience: [WorkExperienceItem]!
+    topSkills: [TopSkill]!
+    websiteStackNodes: [WebsiteStackGraphElement]!
+    websiteStackEdges: [Edge]!
+    websiteStackDialog(id: String!): WebsiteStackDialogElementData
   }
   
   type Info {
     name: String!
     title: String!
-    links: [Link]!
+    imageUrl: String!
     about: [String]!
-    education: [EducationItem]!
-    workExperience: [WorkExperienceItem]!
-    interests: [String]!
-    topSkills: [TopSkill]!
-    websiteStackElements: WebsiteStackElements!
   }
   
   type Link {
@@ -53,24 +62,6 @@ export let properties = {
   type TopSkill {
     name: String!
     percentage: Int!
-  }
-
-  type WebsiteStackItemInfo {
-    title: String!
-    imageUrl: String!
-    description: String
-    links: [WebsiteStackItemInfoLink]
-    additionalImages: [WebsiteStackItemInfoImage]
-  }
-
-  type WebsiteStackItemInfoLink {
-    text: String!
-    href: String!
-  }
-
-  type WebsiteStackItemInfoImage {
-    url: String!
-    title: String
   }
   `,
 };

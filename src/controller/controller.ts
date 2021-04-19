@@ -1,16 +1,23 @@
 import {
   DateScalar,
-  WebsiteStackElementsScalar,
+  WebsiteStackDialogDataElementScalar,
+  WebsiteStackGraphElementScalar,
 } from '../utils/graphql-scalars';
-import {
-  handleInfoQuery,
-  handleWebsiteStackItemInfoQuery,
-} from '../services/service';
 
 import { buildSchema } from 'graphql';
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import { properties } from '../resources/properties';
+import {
+  getInfo,
+  getWebsiteStackNodes,
+  getWebsiteStackDialogData,
+  getLinks,
+  getEducation,
+  getWorkExperience,
+  getTopSkills,
+  getWebsiteStackEdges,
+} from '../repository/me.repository';
 
 export function init(app: express.Application) {
   app.use(
@@ -18,10 +25,19 @@ export function init(app: express.Application) {
     graphqlHTTP({
       schema: buildSchema(properties.graphQlTypeDefs),
       rootValue: {
-        info: handleInfoQuery,
-        websiteStackItemInfo: handleWebsiteStackItemInfoQuery,
+        // query handlers
+        info: getInfo,
+        links: getLinks,
+        education: getEducation,
+        workExperience: getWorkExperience,
+        topSkills: getTopSkills,
+        websiteStackNodes: getWebsiteStackNodes,
+        websiteStackEdges: getWebsiteStackEdges,
+        websiteStackDialog: getWebsiteStackDialogData,
+        // scalars
         Date: DateScalar,
-        WebsiteStackElements: WebsiteStackElementsScalar,
+        WebsiteStackDialogElementData: WebsiteStackDialogDataElementScalar,
+        WebsiteStackGraphElement: WebsiteStackGraphElementScalar,
       },
       graphiql: true,
     })

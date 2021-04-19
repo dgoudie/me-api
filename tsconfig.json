@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "build",
+    "strict": true,
     "rootDir": "src",
     "resolveJsonModule": true,
     "types": ["webrtc", "node"]
