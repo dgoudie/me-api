@@ -17,6 +17,7 @@ import {
   getWorkExperience,
   getTopSkills,
   getWebsiteStackEdges,
+  getRecentProjects,
 } from '../repository/me.repository';
 
 export function init(app: express.Application) {
@@ -31,6 +32,7 @@ export function init(app: express.Application) {
         education: getEducation,
         workExperience: getWorkExperience,
         topSkills: getTopSkills,
+        recentProjects: getRecentProjects,
         websiteStackNodes: getWebsiteStackNodes,
         websiteStackEdges: getWebsiteStackEdges,
         websiteStackDialog: getWebsiteStackDialogData,

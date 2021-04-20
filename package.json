@@ -24,7 +24,7 @@
     "mongodb": "^3.6.3"
   },
   "devDependencies": {
-    "@dgoudie/me-types": "^4.0.0-5",
+    "@dgoudie/me-types": "^4.0.0",
     "@types/cors": "^2.8.9",
     "@types/d3": "^6.3.0",
     "@types/express": "^4.17.11",

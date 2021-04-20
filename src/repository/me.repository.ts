@@ -10,6 +10,7 @@ import {
   WebsiteStackDialogElementData,
   WebsiteStackGraphElement,
   WorkExperienceItem,
+  RecentProject,
 } from '@dgoudie/me-types';
 
 let mongoClient: MongoClient;
@@ -18,6 +19,7 @@ let educationCollection: Collection<EducationItem>;
 let linksCollection: Collection<Link>;
 let topSkillsCollection: Collection<TopSkillItem>;
 let workExperienceCollection: Collection<WorkExperienceItem>;
+let recentProjectsCollection: Collection<RecentProject>;
 let websiteStackElementsCollection: Collection<
   WebsiteStackGraphElement & Node<WebsiteStackDialogElementData>
 >;
@@ -48,6 +50,9 @@ export async function init() {
   workExperienceCollection = db.collection(
     properties.mongodbWorkExperienceCollectionName
   );
+  recentProjectsCollection = db.collection(
+    properties.mongodbRecentProjectsCollectionName
+  );
   websiteStackElementsCollection = db.collection(
     properties.mongodbWebsiteStackElementsCollectionName
   );
@@ -71,6 +76,21 @@ export function getTopSkills() {
 }
 export function getWorkExperience() {
   return workExperienceCollection.find().sort({ startDate: -1 }).toArray();
+}
+
+export function getRecentProjects() {
+  return recentProjectsCollection
+    .aggregate<RecentProject>([
+      {
+        $sort: {
+          order: 1,
+        },
+      },
+      {
+        $unset: 'order',
+      },
+    ])
+    .toArray();
 }
 
 export function getWebsiteStackNodes(): Promise<WebsiteStackGraphElement[]> {

@@ -10,6 +10,7 @@ export let properties = {
   mongodbLinksCollectionName: 'LINKS',
   mongodbTopSkillsCollectionName: 'TOP_SKILLS',
   mongodbWorkExperienceCollectionName: 'WORK_EXPERIENCE',
+  mongodbRecentProjectsCollectionName: 'RECENT_PROJECTS',
   mongodbWebsiteStackElementsCollectionName: 'WEBSITE_STACK_NODES',
   mongodbWebsiteStackEdgesCollectionName: 'WEBSITE_STACK_EDGES',
   graphQlTypeDefs: ` 
@@ -24,6 +25,7 @@ export let properties = {
     education: [EducationItem]!
     workExperience: [WorkExperienceItem]!
     topSkills: [TopSkill]!
+    recentProjects: [RecentProject]!
     websiteStackNodes: [WebsiteStackGraphElement]!
     websiteStackEdges: [Edge]!
     websiteStackDialog(id: String!): WebsiteStackDialogElementData
@@ -62,6 +64,25 @@ export let properties = {
   type TopSkill {
     name: String!
     percentage: Int!
+  }
+
+  type RecentProject {
+    name: String!
+    imageUrl: String!
+    summary: String!
+    attributes: [String]!
+    link: RecentProjectLink
+    additionalImage: RecentProjectAdditionalImage
+  }
+
+  type RecentProjectLink {
+    url: String!
+    text: String!
+  } 
+
+  type RecentProjectAdditionalImage {
+    url: String!
+    backgroundColor: String!
   }
   `,
 };
