@@ -21,7 +21,12 @@ function setupPreRequestMiddleware(app: express.Application) {
   app.use(cors({ origin: process.env.USER_INTERFACE_PATH }));
   app.use((req, res, next) => {
     if (!req.url.match(/^\/docs\/?/)) {
-      getLogger().info(`Received request to ${req.url}`);
+      const logger = getLogger();
+      logger.addContext('http_client_ip_address', req.ip);
+      Object.entries(req.headers).forEach(([key, value]) =>
+        logger.addContext(`http_request_header_${key}`, value)
+      );
+      logger.info(`Received request to ${req.url}`);
     }
     next();
   });
