@@ -40,7 +40,7 @@ function setupHealthCheck(app: express.Application) {
     };
     try {
       res.send(healthcheck);
-    } catch (e) {
+    } catch (e: any) {
       healthcheck.message = e;
       res.status(503).send(healthcheck);
     }

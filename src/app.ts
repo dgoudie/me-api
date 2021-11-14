@@ -9,21 +9,21 @@ import { properties as prodProperties } from './resources/prod-properties';
 const init = () => {
   getLogger().level = `INFO`;
   if (!process.env.LOG_HOST) {
-    getLogger().error(`environment variable LOG_HOST not found.`);
-    return;
-  }
-  configure({
-    appenders: {
-      logstash: {
-        type: '@log4js-node/logstash-http',
-        url: process.env.LOG_HOST,
-        application: properties.serviceName,
+    getLogger().warn(`environment variable LOG_HOST not found.`);
+  } else {
+    configure({
+      appenders: {
+        logstash: {
+          type: '@log4js-node/logstash-http',
+          url: process.env.LOG_HOST,
+          application: properties.serviceName,
+        },
       },
-    },
-    categories: {
-      default: { appenders: ['logstash'], level: 'INFO' },
-    },
-  });
+      categories: {
+        default: { appenders: ['logstash'], level: 'INFO' },
+      },
+    });
+  }
 
   const env = determineEnvironment();
 
